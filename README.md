@@ -1,4 +1,4 @@
-## vscode-registerwebview
+## @vscode-use/registerwebview
 
 > WIP: 这个库是为了快速在 vscode 插件中使用 webview 打开侧边栏，让使用上更加简单
 
