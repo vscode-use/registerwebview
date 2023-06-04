@@ -1,6 +1,6 @@
 {
   "name": "@vscode-use/registerwebview",
-  "version": "0.0.3",
+  "version": "0.0.0",
   "packageManager": "pnpm@7.2.1",
   "description": "",
   "author": "Simon He",
@@ -49,9 +49,6 @@
     "start": "esno src/index.ts",
     "test": "vitest",
     "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "lazy-js-utils": "^0.0.24"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.25.1",
