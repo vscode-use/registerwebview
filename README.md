@@ -57,10 +57,6 @@ import { RegisterWebview } from '@vscode-use/registerwebview'
   },
 ```
 
-## :coffee:
-
-[buy me a cup of coffee](https://github.com/Simon-He95/sponsor)
-
 ## License
 
 [MIT](./LICENSE) License © 2022 [Simon He](https://github.com/Simon-He95)
