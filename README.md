@@ -21,8 +21,8 @@ import { RegisterWebview } from '@vscode-use/registerwebview'
 
 ## Api
 
-- postMessage 推送消息给 js 层
-- deferScript 在 js 加载的最后去加载这部分的 script
+- provider.postMessage 推送消息给 js 层
+- provider.deferScript 在 js 加载的最后去加载这部分的 script
 
 ## Menu Settings
 
