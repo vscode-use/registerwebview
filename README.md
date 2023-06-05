@@ -17,6 +17,27 @@ import { RegisterWebview } from '@vscode-use/registerwebview'
     }
   )
   vscode.window.registerWebviewViewProvider('calicoColors.colorsView', provider)
+
+  /** 绑定自定义icon
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "todoList",
+          "title": "Daily Planner",
+          "icon": "icon.png"
+        }
+      ]
+    },
+    "views": {
+      "todoList": [
+        {
+          "type": "webview",
+          "id": "calicoColors.colorsView",
+          "name": "Calico Colors"
+        }
+      ]
+    },
+   */
 ```
 
 ## Api
