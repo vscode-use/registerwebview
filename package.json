@@ -38,6 +38,26 @@
   "engines": {
     "vscode": "^1.77.0"
   },
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "registerwebview",
+          "title": "Daily Planner",
+          "icon": "icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "registerwebview": [
+        {
+          "type": "webview",
+          "id": "calicoColors.colorsView",
+          "name": "Calico Colors"
+        }
+      ]
+    }
+  },
   "scripts": {
     "build": "tsup ./src/index.ts --format cjs,esm --dts --clean --minify",
     "dev": "npm run build -- --watch src",
