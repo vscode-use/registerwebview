@@ -3,17 +3,24 @@ html {
   margin: 0;
   overflow: hidden;
 }
-.darkMode {
+.small .title {
+  display: none;
+}
+.small .btn {
+  border-radius: 50%;
+  padding: 9px;
+}
+.daily-planner {
   padding: 24px;
-  background: #181818;
   height: 100vh;
   box-sizing: border-box;
+  overflow-x: auto;
+}
+.darkMode {
+  background: #181818;
 }
 .lightMode {
-  padding: 24px;
   background: rgb(230, 231, 248);
-  height: 100vh;
-  box-sizing: border-box;
 }
 #app {
   border: 1px solid #ebebeb;
@@ -35,6 +42,7 @@ html {
   margin-bottom: 20px;
 }
 .btn {
+  transition: all 0.5s;
   border-radius: 3px;
   padding: 9px 15px;
   font-size: 12px;
@@ -113,14 +121,25 @@ html {
 
 .custom-tree-node > span:nth-child(1) {
   display: inline-block;
-  width: 100%;
-}
-
-.custom-tree-node > span {
-  display: flex;
-  align-items: center;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .el-tree {
   background-color: transparent;
+  color: rgb(143, 147, 246);
+}
+.darkMode .el-tree {
+  color: rgb(240, 147, 175);
+}
+
+.el-checkbox__input.is-checked .el-checkbox__inner {
+  background-color: rgb(133, 137, 255);
+  border-color: rgb(133, 137, 255);
+}
+
+.darkMode .el-checkbox__input.is-checked .el-checkbox__inner {
+  background-color: rgb(240, 153, 147);
+  border-color: rgb(240, 153, 147);
 }
