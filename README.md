@@ -40,6 +40,25 @@ import { RegisterWebview } from '@vscode-use/registerwebview'
    */
 ```
 
+## Feature
+
+之前脚本使用字符串的方式插入体验不好,现在暴露了 deferScriptUri 的方式传入 media 下的.ts 或者.js 路径，就可以写 js 了，传惨需要提前通过 setProps 的方式，然后 js 中可以通过 webviewThis 获取到参数, webviewThis 会在最终 render 被替换成 setProps 的参数
+
+```code
+const vscode = acquireVsCodeApi()
+const { name, age } = webviewThis
+const App = {
+  data() {
+    return {
+      name,
+      age,
+    }
+  },
+}
+new Vue(App).$mount('#app')
+
+```
+
 ## Api
 
 - provider.postMessage 推送消息给 js 层

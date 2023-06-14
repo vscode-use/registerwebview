@@ -1,8 +1,11 @@
+import fsp from 'node:fs/promises'
 import * as vscode from 'vscode'
 
 export class RegisterWebview implements vscode.WebviewViewProvider {
   private _view?: vscode.WebviewView
   private _deferScript = ''
+  private props: Record<string, any> = {}
+  private scriptsPromises: Promise<string>[] = []
   constructor(
     private readonly _extensionUri: vscode.Uri,
     private _html: string,
@@ -17,14 +20,16 @@ export class RegisterWebview implements vscode.WebviewViewProvider {
     this._callback = _callback
   }
 
-  public refresh(newHtml: string) {
+  public async refresh(newHtml: string) {
     if (this._view) {
       this._html = newHtml
-      this._view.webview.html = this._getHtmlForWebview(this._view.webview)
+      this._view.webview.html = await this._getHtmlForWebview(
+        this._view.webview,
+      )
     }
   }
 
-  public resolveWebviewView(webviewView: vscode.WebviewView) {
+  public async resolveWebviewView(webviewView: vscode.WebviewView) {
     this._view = webviewView
 
     webviewView.webview.options = {
@@ -34,7 +39,9 @@ export class RegisterWebview implements vscode.WebviewViewProvider {
       localResourceRoots: [this._extensionUri],
     }
 
-    webviewView.webview.html = this._getHtmlForWebview(webviewView.webview)
+    webviewView.webview.html = await this._getHtmlForWebview(
+      webviewView.webview,
+    )
 
     webviewView.webview.onDidReceiveMessage(this._callback)
   }
@@ -44,12 +51,30 @@ export class RegisterWebview implements vscode.WebviewViewProvider {
       this._view.webview.postMessage(data)
   }
 
-  deferScript(scripts: string | string[]) {
+  public deferScript(scripts: string | string[]) {
     this._deferScript
       = typeof scripts === 'string' ? scripts : scripts.join('\n')
   }
 
-  private _getHtmlForWebview(webview: vscode.Webview) {
+  public setProps(props: Record<string, any>) {
+    this.props = { ...this.props, ...props }
+  }
+
+  public deferScriptUri(scriptUri: string | string[]) {
+    try {
+      const uris = typeof scriptUri === 'string' ? [scriptUri] : scriptUri
+      this.scriptsPromises.push(
+        ...uris.map(uri =>
+          fsp.readFile(`${this._extensionUri.path}/media/${uri}`, 'utf-8'),
+        ),
+      )
+    }
+    catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
+
+  private async _getHtmlForWebview(webview: vscode.Webview) {
     const outerUriReg = /^http[s]:\/\//
     const styles = this._styles
       ? (Array.isArray(this._styles) ? this._styles : [this._styles])
@@ -78,6 +103,16 @@ export class RegisterWebview implements vscode.WebviewViewProvider {
       })
       .join('\n')
 
+    const scriptsUri = await Promise.all(this.scriptsPromises).then(scripts =>
+      scripts.map(
+        script =>
+          `<script>${script.replace(
+            'webviewThis',
+            JSON.stringify(this.props),
+          )}</script>`,
+      ),
+    )
+
     return `<!DOCTYPE html>
 			<html lang="en">
         <head>
@@ -91,6 +126,7 @@ export class RegisterWebview implements vscode.WebviewViewProvider {
         </body>
         ${scripts}
         ${this._deferScript}
+        ${scriptsUri.join('\n')}
 			</html>`
   }
 
