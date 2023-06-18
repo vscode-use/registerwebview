@@ -1,9 +1,9 @@
 <p align="center">
 <img src="./assets/kv.png" alt="vscode-use/treeprovider">
 </p>
-<p align="center"> English | <a href="./README_zh.md">简体中文</a></p>
+<p align="center"> <a href="./README.md">English</a> | 简体中文</p>
 
-> WIP: This library is designed to quickly open the sidebar using webview in the vscode plugin, making it easier to use
+> WIP: 这个库是为了快速在 vscode 插件中使用 webview 打开侧边栏，让使用上更加简单
 
 ## Usage
 
@@ -13,8 +13,8 @@ import { RegisterWebview } from '@vscode-use/registerwebview'
  const provider = new RegisterWebview(
   context.extensionUri,
     `<div>hello,world</div>`, // html
-    ['main.css'], // css，The local css must be configured in the media directory
-    [], // js，The local js must be configured in the media directory
+    ['main.css'], // css，本地css需要配置在media目录下
+    [], // js，本地js需要配置在media目录下
     (data) => { // callback
 
     }
@@ -45,7 +45,7 @@ import { RegisterWebview } from '@vscode-use/registerwebview'
 
 ## Feature
 
-Previously, the script used the string method to insert the bad experience, now exposed the defer script uri method to pass the.ts or.js path under the media, so you can write js, and you need to pass the set props method in advance. js can then get the parameters via webview this, webview this will be replaced with the parameters of set props in the final render
+之前脚本使用字符串的方式插入体验不好,现在暴露了 deferScriptUri 的方式传入 media 下的.ts 或者.js 路径，就可以写 js 了，传惨需要提前通过 setProps 的方式，然后 js 中可以通过 webviewThis 获取到参数, webviewThis 会在最终 render 被替换成 setProps 的参数
 
 ```code
 const vscode = acquireVsCodeApi()
@@ -64,8 +64,8 @@ new Vue(App).$mount('#app')
 
 ## Api
 
-- provider.postMessage **_Push messages to the js layer_**
-- provider.deferScript **_Load the script at the end of the js load_**
+- provider.postMessage **_推送消息给 js 层_**
+- provider.deferScript **_在 js 加载的最后去加载这部分的 script_**
 
 ## Menu Settings
 
@@ -89,7 +89,7 @@ new Vue(App).$mount('#app')
 			}
 		],
 		"menus": {
-			"view/title": [ // Button in the top right corner
+			"view/title": [ // 顶部右上角的按钮
 				{
 					"command": "calicoColors.clearColors",
 					"group": "navigation",
